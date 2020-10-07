@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.e.du_an_mau">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".Ui.QLThongKeActivity"></activity>
+        <activity android:name=".Ui.QLSachBanChayActivity" />
+        <activity android:name=".Ui.QLSachActivity" />
+        <activity android:name=".Ui.QlHoaDonActivity" />
+        <activity android:name=".Ui.QLTheLoaiActivity" />
+        <activity android:name=".Ui.QLNguoiDungActivity" />
+        <activity android:name=".Ui.DangNhapActivity" />
+        <activity android:name=".Ui.ChaoActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".Ui.HomeActivity" />
+    </application>
+
+</manifest>
