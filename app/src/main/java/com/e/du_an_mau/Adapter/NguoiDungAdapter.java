@@ -3,67 +3,81 @@ package com.e.du_an_mau.Adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.e.du_an_mau.R;
 import com.e.du_an_mau.model.NguoiDung;
-import com.e.du_an_mau.sqLite.MySqlite;
-import com.e.du_an_mau.sqLite.UserDAO;
 
 import java.util.List;
 
-public class NguoiDungAdapter extends BaseAdapter {
-    private  List<NguoiDung> nguoiDungList;
+public class NguoiDungAdapter extends RecyclerView.Adapter<NguoiDungAdapter.NguoiDungHolder> {
+    private List<NguoiDung> nguoiDungList;
+    private OnItemClickListener onItemClickListener;
 
-    public NguoiDungAdapter(List<NguoiDung> nguoiDungList) {
+    public NguoiDungAdapter(List<NguoiDung> nguoiDungList, OnItemClickListener onItemClickListener) {
         this.nguoiDungList = nguoiDungList;
+        this.onItemClickListener = onItemClickListener;
+    }
+
+    @NonNull
+    @Override
+    public NguoiDungHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        return new NguoiDungHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_nguoi_dung, parent, false));
     }
 
     @Override
-    public int getCount() {
+    public void onBindViewHolder(@NonNull NguoiDungHolder holder, int position) {
+        holder.bindItem(position);
+    }
+
+    @Override
+    public int getItemCount() {
         return nguoiDungList.size();
     }
 
-    @Override
-    public Object getItem(int i) {
-        return null;
+    public void submitList(List<NguoiDung> nguoiDungList) {
+        this.nguoiDungList.clear();
+        this.nguoiDungList.addAll(nguoiDungList);
+        notifyDataSetChanged();
     }
 
-    @Override
-    public long getItemId(int i) {
-        return 0;
-    }
+    public class NguoiDungHolder extends RecyclerView.ViewHolder {
+        TextView tvNameUserName;
+        TextView tvName;
+        ImageView imgDelNguoiDung;
 
-    @Override
-    public View getView(final int i, View view,final ViewGroup viewGroup) {
-        view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.nguoi_dung,viewGroup,false);
+        public NguoiDungHolder(@NonNull View itemView) {
+            super(itemView);
+            tvNameUserName = itemView.findViewById(R.id.tvUsername);
+            tvName = itemView.findViewById(R.id.tvName);
+            imgDelNguoiDung = itemView.findViewById(R.id.imgDelNguoiDung);
+        }
 
-        TextView tvNameUserName = view.findViewById(R.id.tvUserName);
-        TextView tvName = view.findViewById(R.id.tvName);
-        tvNameUserName.setText(nguoiDungList.get(i).username);
-        tvName.setText(nguoiDungList.get(i).ten);
-        
-        view.findViewById(R.id.btnDel).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                UserDAO userDAO = new UserDAO(new MySqlite(viewGroup.getContext()));
-                String username = nguoiDungList.get(i).username;
-                boolean ketQua = userDAO.deleteUser(username);
-                if (ketQua) {
-                    Toast.makeText(viewGroup.getContext(), "Xóa thành công!",
-                            Toast.LENGTH_SHORT).show();
-                    nguoiDungList.remove(i);
-                    notifyDataSetChanged();
-
-                } else {
-                    Toast.makeText(viewGroup.getContext(), "Lỗi khi xóa!",
-                            Toast.LENGTH_SHORT).show();
+        public void bindItem(final int position) {
+            final NguoiDung nguoiDung = nguoiDungList.get(position);
+            tvNameUserName.setText(nguoiDung.username);
+            tvName.setText(nguoiDung.ten);
+            imgDelNguoiDung.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onItemClickListener.onItemRemoveListener(getLayoutPosition(), nguoiDung);
                 }
-            }
-        });
+            });
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onItemClickListener.onItemClickListener(getLayoutPosition(),nguoiDung);
+                }
+            });
+        }
+    }
 
-        return view;
+    public interface OnItemClickListener {
+        void onItemRemoveListener(int position, NguoiDung nguoiDung);
+        void onItemClickListener(int position, NguoiDung nguoiDung);
     }
 }

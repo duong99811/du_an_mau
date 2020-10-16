@@ -12,10 +12,13 @@ public class MySqlite extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        String user_table = "CREATE TABLE USER (username char(15) primary key" +
-                ",name varchar(50),password varchar" +
-                ",numberPhone char)";
+        String user_table = "CREATE TABLE USER (username char(15) primary key,password varchar,numberPhone char,name varchar)";
+        String theloai_table = "CREATE TABLE THELOAI(matheloai char(15) primary key,tentheloai varchar,vitri char,mota varchar)";
+        String sach_table = "CREATE TABLE SACH(masach char(15) primary key,matheloai char(15),tensach varchar,tacgia varchar," +
+                "NXB varchar,giabia char,soluong char)";
         sqLiteDatabase.execSQL(user_table);
+        sqLiteDatabase.execSQL(theloai_table);
+        sqLiteDatabase.execSQL(sach_table);
     }
 
     @Override

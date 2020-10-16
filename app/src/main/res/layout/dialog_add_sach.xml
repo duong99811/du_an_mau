@@ -1,81 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/pinklight"
     android:orientation="vertical">
+
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        app:counterMaxLength="16"
-        app:errorEnabled="true"
-        app:counterEnabled="true"
-        >
+        app:errorEnabled="true">
+
         <EditText
-            android:id="@+id/edEditUserName"
+            android:id="@+id/edAddMaSach"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Tài khoản">
-        </EditText>
+            android:hint="Mã sách"></EditText>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Spinner
+            android:id="@+id/spnTheLoai"
+            android:layout_width="300dp"
+            android:layout_height="match_parent" />
+
+        <ImageView
+            android:id="@+id/imgAddTheLoai"
+            android:layout_width="39dp"
+            android:layout_height="40sp"
+            android:src="@drawable/pluspink" />
+    </LinearLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        app:errorEnabled="true">
+
+        <EditText
+            android:id="@+id/edAddTenSach"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Tên sách"></EditText>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        app:counterMaxLength="8"
-        app:errorEnabled="true"
-        app:passwordToggleEnabled="true"
-        app:counterEnabled="true"
-        >
+        app:errorEnabled="true">
+
         <EditText
-            android:id="@+id/edEditPassWord"
-            android:inputType="textPassword"
+            android:id="@+id/edAddTacGia"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Mật khẩu">
-
-        </EditText>
+            android:hint="Tác giả"></EditText>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        app:errorEnabled="true"
-        >
+        app:errorEnabled="true">
+
         <EditText
+            android:id="@+id/edAddNXB"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nhà xuất bản"></EditText>
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        app:errorEnabled="true">
+
+        <EditText
+            android:id="@+id/edAddGiaBia"
             android:inputType="number"
-            android:id="@+id/edEditPhone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Số điện thoại">
-        </EditText>
+            android:hint="Giá bìa"></EditText>
     </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        app:errorEnabled="true"
-        >
-        <EditText
-            android:id="@+id/edEditName"
+        <Spinner
+            android:id="@+id/spnSoLuong"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Họ Tên">
-        </EditText>
-    </com.google.android.material.textfield.TextInputLayout>
+            android:layout_height="40dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <Button
-            android:id="@+id/btnEditSave"
+            android:id="@+id/btnAddSaveSach"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="5sp"
@@ -84,7 +108,7 @@
             android:text="Lưu" />
 
         <Button
-            android:id="@+id/btnEditCancel"
+            android:id="@+id/btnAddCancelSach"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="5sp"

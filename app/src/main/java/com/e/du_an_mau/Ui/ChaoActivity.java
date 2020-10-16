@@ -1,10 +1,12 @@
 package com.e.du_an_mau.Ui;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.CountDownTimer;
+import android.os.Handler;
+import android.view.Window;
+import android.view.WindowManager;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.e.du_an_mau.R;
 
@@ -12,19 +14,17 @@ public class ChaoActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getSupportActionBar().hide();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        CountDownTimer countDownTimer = new CountDownTimer(2500,100) {
+        new Handler().postDelayed(new Runnable() {
             @Override
-            public void onTick(long l) {
-
-            }
-
-            @Override
-            public void onFinish() {
+            public void run() {
                 startActivity(new Intent(ChaoActivity.this, DangNhapActivity.class));
             }
-        };
-        countDownTimer.start();
+        }, 2000);
     }
 }

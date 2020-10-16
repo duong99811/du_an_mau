@@ -6,10 +6,14 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".Ui.QLNguoiDungActivity">
-    <ListView
-        android:id="@+id/lvNguoiDung"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvNguoiDung"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:orientation="vertical"
+        tools:listitem="@layout/custom_nguoi_dung"
+        tools:itemCount="10">
 
-    </ListView>
+    </androidx.recyclerview.widget.RecyclerView>
 </LinearLayout>
