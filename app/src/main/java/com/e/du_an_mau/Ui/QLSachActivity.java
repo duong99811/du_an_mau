@@ -1,6 +1,8 @@
 package com.e.du_an_mau.Ui;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -39,6 +41,7 @@ public class QLSachActivity extends AppCompatActivity implements SachAdapter.OnI
     private List<Sach> sachList;
     private List<TheLoai> theLoaiList;
     String matheloai, soluong;
+    EditText edSearch;
     List<String> listSoLuong = new ArrayList<String>();
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,12 +50,46 @@ public class QLSachActivity extends AppCompatActivity implements SachAdapter.OnI
         mySqlite = new MySqlite(this);
         sachDAO = new SachDAO(mySqlite);
         recyclerView = findViewById(R.id.rvSach);
+        edSearch = findViewById(R.id.edSearch);
+        ImageView imgSearch = findViewById(R.id.imgSearch);
         sachList = sachDAO.getAllSach();
         sachAdapter = new SachAdapter(sachList, this);
         recyclerView.addItemDecoration(new DividerItemDecoration(this,
                 DividerItemDecoration.VERTICAL));
         recyclerView.setAdapter(sachAdapter);
+        edSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
 
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (charSequence.length() == 0) {
+                    sachList = sachDAO.getAllSach();
+                    sachAdapter = new SachAdapter(sachList,QLSachActivity.this);
+                    recyclerView.setAdapter(sachAdapter);
+                }
+            }
+            @Override
+            public void afterTextChanged(Editable editable) {}
+        });
+        imgSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String tensach = edSearch.getText().toString().trim();
+                if (tensach.isEmpty()) {
+                    edSearch.setError("Nhập dữ liệu...");
+                    return;
+                }
+                sachDAO = new SachDAO(mySqlite);
+                sachList = sachDAO.searchSach(tensach);
+                if (sachList.size() == 0) {
+                    edSearch.setError("Không tìm thấy tên sách này!");
+                } else {
+                    sachAdapter = new SachAdapter(sachList,QLSachActivity.this);
+                    recyclerView.setAdapter(sachAdapter);
+                }
+            }
+        });
     }
 
     @Override
@@ -96,6 +133,8 @@ public class QLSachActivity extends AppCompatActivity implements SachAdapter.OnI
                 @Override
                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                     matheloai = theLoaiList.get(spnTheLoai.getSelectedItemPosition()).matheloai;
+                    matheloai = adapterView.getSelectedItem().toString();
+
                 }
 
                 @Override
@@ -213,7 +252,6 @@ public class QLSachActivity extends AppCompatActivity implements SachAdapter.OnI
                 }
             });
 
-
         }
         return super.onOptionsItemSelected(item);
     }
@@ -227,7 +265,7 @@ public class QLSachActivity extends AppCompatActivity implements SachAdapter.OnI
     }
 
     public void getSoLuong(Spinner spinner) {
-        for (int i = 0; i <= 250; i++) {
+        for (int i = 1; i <= 250; i++) {
             String addSoLuong = String.valueOf(i);
             listSoLuong.add(addSoLuong);
         }
@@ -267,8 +305,88 @@ public class QLSachActivity extends AppCompatActivity implements SachAdapter.OnI
         });
     }
 
+    //update Sách
     @Override
     public void onItemClickListener(int position, Sach sach) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(QLSachActivity.this);
+        View view = LayoutInflater.from(QLSachActivity.this).inflate(R.layout.dialog_edit_sach, null);
+        final EditText edEditMaSach = view.findViewById(R.id.edEditMaSach);
+        final Spinner spnTheLoai = view.findViewById(R.id.spnTheLoai);
+        ImageView imgAddTheLoaiEdit = view.findViewById(R.id.imgAddTheLoaiEdit);
+        final EditText edEditTenSach = view.findViewById(R.id.edEditTenSach);
+        final EditText edEditTacGia = view.findViewById(R.id.edEditTacGia);
+        final EditText edEditNXB = view.findViewById(R.id.edEditNXB);
+        final EditText edEditGiaBia = view.findViewById(R.id.edEditGiaBia);
+        final Spinner spnSoLuong = view.findViewById(R.id.spnSoLuong);
+        Button btnEditSaveSach = view.findViewById(R.id.btnEditSaveSach);
+        Button btnEditCancelSach = view.findViewById(R.id.btnEditCancelSach);
 
+        edEditMaSach.setText(sach.masach);
+        edEditTenSach.setText(sach.tensach);
+        edEditTacGia.setText(sach.tacgia);
+        edEditNXB.setText(sach.NXB);
+        edEditGiaBia.setText(sach.giabia);
+        edEditMaSach.setEnabled(false);
+        //spinner số lượng
+        getSoLuong(spnSoLuong);
+        //spinner thể loại
+        getMaTheLoai(spnTheLoai);
+        builder.setView(view);
+        final AlertDialog alertDialog = builder.show();
+        //add thể loại
+        imgAddTheLoaiEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+            }
+        });
+        //edit Sach
+        btnEditSaveSach.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String masach = edEditMaSach.getText().toString().trim();
+                String tensach = edEditTenSach.getText().toString().trim();
+                String tacgia = edEditTacGia.getText().toString().trim();
+                String NXB = edEditNXB.getText().toString().trim();
+                String giabia = edEditGiaBia.getText().toString().trim();
+                Sach sach = new Sach(masach, matheloai, tensach, tacgia, NXB, giabia, soluong);
+                if (edEditMaSach.getText().toString().trim().isEmpty()) {
+                    edEditMaSach.setError("Nhập đủ thông tin...");
+                    return;
+                } else if (edEditTenSach.getText().toString().trim().isEmpty()) {
+                    edEditTenSach.setError("Nhập đủ thông tin...");
+                    return;
+
+                } else if (edEditTacGia.getText().toString().trim().isEmpty()) {
+                    edEditTacGia.setError("Nhập đủ thông tin...");
+                    return;
+
+                } else if (edEditNXB.getText().toString().trim().isEmpty()) {
+                    edEditNXB.setError("Nhập đủ thông tin...");
+                    return;
+
+                } else if (edEditGiaBia.getText().toString().trim().isEmpty()) {
+                    edEditGiaBia.setError("Nhập đủ thông tin...");
+                    return;
+
+                } else {
+                    boolean ketQua = sachDAO.updateSach(sach);
+                    if (ketQua) {
+                        Toast.makeText(QLSachActivity.this, "Thành công!", Toast.LENGTH_SHORT).show();
+                        alertDialog.dismiss();
+                        sachList = sachDAO.getAllSach();
+                        sachAdapter.submitList(sachList);
+                    } else {
+                        Toast.makeText(QLSachActivity.this,
+                                "Không thành công!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        });
+        btnEditCancelSach.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+            }
+        });
     }
 }

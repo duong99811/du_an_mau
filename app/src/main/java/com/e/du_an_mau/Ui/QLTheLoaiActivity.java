@@ -161,7 +161,7 @@ public class QLTheLoaiActivity extends AppCompatActivity implements TheLoaiAdapt
         edEditTenTheLoai.setText(theLoai.tentheloai);
         edEditVitri.setText(theLoai.vitri);
         edEditMota.setText(theLoai.mota);
-
+        edEditMaTheLoai.setEnabled(false);
         builder.setView(view);
         final AlertDialog alertDialog = builder.show();
         btnEditSaveTheLoai.setOnClickListener(new View.OnClickListener() {

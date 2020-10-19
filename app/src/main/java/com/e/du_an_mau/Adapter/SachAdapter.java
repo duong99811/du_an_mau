@@ -23,6 +23,7 @@ public class SachAdapter extends RecyclerView.Adapter<SachAdapter.SachHolder> {
         this.onItemClickListener = onItemClickListener;
     }
 
+
     @NonNull
     @Override
     public SachHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

@@ -11,13 +11,15 @@ import java.util.List;
 
 public class UserDAO {
     MySqlite mySqlite;
+    SQLiteDatabase sqLiteDatabase;
+
     public UserDAO(MySqlite mySqlite) {
         this.mySqlite = mySqlite;
     }
 
     //add
     public boolean addUser(NguoiDung nguoiDung) {
-        SQLiteDatabase sqLiteDatabase = mySqlite.getWritableDatabase();
+        sqLiteDatabase = mySqlite.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("username", nguoiDung.username);
         contentValues.put("password", nguoiDung.password);
@@ -29,7 +31,7 @@ public class UserDAO {
 
     //update
     public boolean updateUser(NguoiDung nguoiDung) {
-        SQLiteDatabase sqLiteDatabase = mySqlite.getWritableDatabase();
+        sqLiteDatabase = mySqlite.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("username", nguoiDung.username);
         contentValues.put("password", nguoiDung.password);
@@ -41,7 +43,7 @@ public class UserDAO {
     //delete
 
     public boolean deleteUser(String username) {
-        SQLiteDatabase sqLiteDatabase = mySqlite.getWritableDatabase();
+        sqLiteDatabase = mySqlite.getWritableDatabase();
         long result = sqLiteDatabase.delete("USER", "username=?", new String[]{username});
         return result > 0;
     }
@@ -57,11 +59,19 @@ public class UserDAO {
                 String password = cursor.getString(1);
                 String sdt = cursor.getString(2);
                 String name = cursor.getString(3);
-                NguoiDung nguoiDung = new NguoiDung(username,password,sdt,name);
+                NguoiDung nguoiDung = new NguoiDung(username, password, sdt, name);
                 nguoiDungList.add(nguoiDung);
                 cursor.moveToNext();
             }
         }
         return nguoiDungList;
     }
+
+    public int checkLogin(String username, String password) {
+        sqLiteDatabase = mySqlite.getWritableDatabase();
+        int result = sqLiteDatabase.delete("USER", "username=? AND password=?", new String[]{username, password});
+        if (result == 0){return -1;}
+        return 1;
+    }
+
 }

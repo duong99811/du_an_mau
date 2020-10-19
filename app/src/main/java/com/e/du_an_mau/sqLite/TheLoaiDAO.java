@@ -60,4 +60,6 @@ public class TheLoaiDAO {
         }
         return theLoaiList;
     }
+
+    
 }

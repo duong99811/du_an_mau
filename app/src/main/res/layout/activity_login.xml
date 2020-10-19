@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
     android:orientation="vertical"
     tools:context=".Ui.DangNhapActivity">
 
@@ -11,10 +12,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        app:counterMaxLength="16"
-        app:errorEnabled="true"
         app:counterEnabled="true"
-        >
+        app:counterMaxLength="16"
+        app:errorEnabled="true">
+
         <EditText
             android:id="@+id/edTaiKhoan"
             android:layout_width="match_parent"
@@ -29,35 +30,36 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
+        app:counterEnabled="true"
         app:counterMaxLength="8"
         app:errorEnabled="true"
-        app:passwordToggleEnabled="true"
-        app:counterEnabled="true"
-        >
+        app:passwordToggleEnabled="true">
+
         <EditText
             android:id="@+id/edMatKhau"
-            android:inputType="textPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Mật khẩu">
+            android:hint="Mật khẩu"
+            android:inputType="textPassword">
 
         </EditText>
     </com.google.android.material.textfield.TextInputLayout>
+
     <CheckBox
         android:id="@+id/chkRemember"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="5dp"
-        android:text="Nhớ tài khoản?"
-        />
+        android:buttonTint="@color/pink"
+        android:text="Nhớ tài khoản?" />
+
     <Button
-        android:onClick="dangnhap"
-        android:background="@color/pink"
         android:id="@+id/btnDangNhap"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:background="@color/pink"
         android:text="đăng  nhập" />
 
 </LinearLayout>

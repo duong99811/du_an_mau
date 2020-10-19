@@ -6,14 +6,31 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".Ui.QLSachActivity">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/edSearch"
+            android:layout_width="348dp"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/imgSearch"
+            android:src="@drawable/search"
+            android:layout_width="50sp"
+            android:layout_height="50sp"/>
+    </LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvSach"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:orientation="vertical"
-        tools:listitem="@layout/custom_sach"
-        tools:itemCount="10">
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:itemCount="10"
+        tools:listitem="@layout/custom_sach">
 
     </androidx.recyclerview.widget.RecyclerView>
 </LinearLayout>

@@ -157,7 +157,7 @@ public class QLNguoiDungActivity extends AppCompatActivity implements NguoiDungA
         edEditPassWord.setText(nguoiDung.password);
         edEditPhone.setText(nguoiDung.sdt);
         edEditName.setText(nguoiDung.ten);
-
+        edEditUserName.setEnabled(false);
         builder.setView(view);
         final AlertDialog alertDialog = builder.show();
         btnEditSave.setOnClickListener(new View.OnClickListener() {
