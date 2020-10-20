@@ -67,7 +67,7 @@ public class SachAdapter extends RecyclerView.Adapter<SachAdapter.SachHolder> {
             tvTenSach.setText(sach.tensach);
             tvMaSach.setText(sach.masach);
             tvSoLuongSach.setText(sach.soluong);
-            tvGiabanSach.setText(sach.giabia);
+            tvGiabanSach.setText(sach.giabia+" VNĐ");
             imgDelSach.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

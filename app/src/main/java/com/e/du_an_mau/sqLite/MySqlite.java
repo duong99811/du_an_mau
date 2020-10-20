@@ -19,6 +19,7 @@ public class MySqlite extends SQLiteOpenHelper {
         String hoadonct_table = "CREATE TABLE HOADONCHITIET (mahoadonchitiet integer primary key AUTOINCREMENT,mahoadon" +
                 "varchar, masach varchar, soluongmua varchar)";
         String hoadon_table ="CREATE TABLE HoaDon (mahoadon text primary key, ngaymua date)";
+
         sqLiteDatabase.execSQL(user_table);
         sqLiteDatabase.execSQL(theloai_table);
         sqLiteDatabase.execSQL(sach_table);

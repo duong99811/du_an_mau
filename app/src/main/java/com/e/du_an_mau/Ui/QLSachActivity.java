@@ -3,6 +3,7 @@ package com.e.du_an_mau.Ui;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -40,7 +41,7 @@ public class QLSachActivity extends AppCompatActivity implements SachAdapter.OnI
     private TheLoaiDAO theLoaiDAO;
     private List<Sach> sachList;
     private List<TheLoai> theLoaiList;
-    String matheloai, soluong;
+    String matheloai, soluong,matheloaiE,soluongE;
     EditText edSearch;
     List<String> listSoLuong = new ArrayList<String>();
 
@@ -57,21 +58,19 @@ public class QLSachActivity extends AppCompatActivity implements SachAdapter.OnI
         recyclerView.addItemDecoration(new DividerItemDecoration(this,
                 DividerItemDecoration.VERTICAL));
         recyclerView.setAdapter(sachAdapter);
+
         edSearch.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {}
-
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (charSequence.length() == 0) {
                     sachList = sachDAO.getAllSach();
                     sachAdapter = new SachAdapter(sachList,QLSachActivity.this);
-                    recyclerView.setAdapter(sachAdapter);
-                }
-            }
+                    recyclerView.setAdapter(sachAdapter); } }
             @Override
-            public void afterTextChanged(Editable editable) {}
-        });
+            public void afterTextChanged(Editable editable) {}});
+
         imgSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -82,9 +81,7 @@ public class QLSachActivity extends AppCompatActivity implements SachAdapter.OnI
                 }
                 sachDAO = new SachDAO(mySqlite);
                 sachList = sachDAO.searchSach(tensach);
-                if (sachList.size() == 0) {
-                    edSearch.setError("Không tìm thấy tên sách này!");
-                } else {
+                if (sachList.size() == 0) { edSearch.setError("Không tìm thấy tên sách này!"); } else {
                     sachAdapter = new SachAdapter(sachList,QLSachActivity.this);
                     recyclerView.setAdapter(sachAdapter);
                 }
@@ -123,9 +120,7 @@ public class QLSachActivity extends AppCompatActivity implements SachAdapter.OnI
                 }
 
                 @Override
-                public void onNothingSelected(AdapterView<?> adapterView) {
-
-                }
+                public void onNothingSelected(AdapterView<?> adapterView) { }
             });
             //spinner thể loại
             getMaTheLoai(spnTheLoai);
@@ -133,13 +128,9 @@ public class QLSachActivity extends AppCompatActivity implements SachAdapter.OnI
                 @Override
                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                     matheloai = theLoaiList.get(spnTheLoai.getSelectedItemPosition()).matheloai;
-                    matheloai = adapterView.getSelectedItem().toString();
-
                 }
-
                 @Override
-                public void onNothingSelected(AdapterView<?> adapterView) {
-                }
+                public void onNothingSelected(AdapterView<?> adapterView) { }
             });
             builder.setView(view);
             final AlertDialog alertDialog = builder.show();
@@ -329,8 +320,24 @@ public class QLSachActivity extends AppCompatActivity implements SachAdapter.OnI
         edEditMaSach.setEnabled(false);
         //spinner số lượng
         getSoLuong(spnSoLuong);
+        spnSoLuong.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                soluongE = listSoLuong.get(spnSoLuong.getSelectedItemPosition());
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {}
+        });
         //spinner thể loại
         getMaTheLoai(spnTheLoai);
+        spnTheLoai.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                matheloaiE = theLoaiList.get(spnTheLoai.getSelectedItemPosition()).matheloai;
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) { }
+        });
         builder.setView(view);
         final AlertDialog alertDialog = builder.show();
         //add thể loại
@@ -348,7 +355,7 @@ public class QLSachActivity extends AppCompatActivity implements SachAdapter.OnI
                 String tacgia = edEditTacGia.getText().toString().trim();
                 String NXB = edEditNXB.getText().toString().trim();
                 String giabia = edEditGiaBia.getText().toString().trim();
-                Sach sach = new Sach(masach, matheloai, tensach, tacgia, NXB, giabia, soluong);
+                Sach sach = new Sach(masach, matheloaiE, tensach, tacgia, NXB, giabia, soluongE);
                 if (edEditMaSach.getText().toString().trim().isEmpty()) {
                     edEditMaSach.setError("Nhập đủ thông tin...");
                     return;

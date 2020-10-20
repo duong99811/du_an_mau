@@ -1,7 +1,13 @@
 package com.e.du_an_mau.model;
 
 public class Sach {
-    public String masach,matheloai,tensach,tacgia,NXB,giabia,soluong;
+    public String masach;
+    public String matheloai;
+    public String tensach;
+    public String tacgia;
+    public String NXB;
+    public String giabia;
+    public String soluong;
 
     public Sach() {
     }
@@ -14,6 +20,9 @@ public class Sach {
         this.NXB = NXB;
         this.giabia = giabia;
         this.soluong = soluong;
+    }
+    public String toString() {
+        return tensach;
     }
 }
 
