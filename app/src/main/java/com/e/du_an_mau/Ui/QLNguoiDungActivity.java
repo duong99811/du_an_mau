@@ -37,6 +37,7 @@ public class QLNguoiDungActivity extends AppCompatActivity implements NguoiDungA
         mySqlite = new MySqlite(this);
         userDAO = new UserDAO(mySqlite);
         recyclerView = findViewById(R.id.rvNguoiDung);
+
         nguoiDungList = userDAO.getAllUser();
         nguoiDungAdapter = new NguoiDungAdapter(nguoiDungList, this);
         recyclerView.addItemDecoration(new DividerItemDecoration(this,

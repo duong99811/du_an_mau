@@ -22,7 +22,7 @@ public class Sach {
         this.soluong = soluong;
     }
     public String toString() {
-        return tensach;
+        return masach+" | "+tensach;
     }
 }
 

@@ -20,6 +20,7 @@
             android:id="@+id/edTaiKhoan"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="admin"
             android:hint="Tài khoản">
 
         </EditText>
@@ -40,6 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Mật khẩu"
+            android:text="admin"
             android:inputType="textPassword">
 
         </EditText>

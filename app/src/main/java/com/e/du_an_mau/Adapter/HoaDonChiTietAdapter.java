@@ -25,7 +25,7 @@ public class HoaDonChiTietAdapter extends RecyclerView.Adapter<HoaDonChiTietAdap
     @NonNull
     @Override
     public HoaDonChiTietHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new HoaDonChiTietHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_hoa_don, parent, false));
+        return new HoaDonChiTietHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_hoa_don_chi_tiet, parent, false));
     }
 
     @Override

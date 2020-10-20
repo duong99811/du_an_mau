@@ -71,13 +71,13 @@ public class SachAdapter extends RecyclerView.Adapter<SachAdapter.SachHolder> {
             imgDelSach.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    onItemClickListener.onItemRemoveListener(getLayoutPosition(), sach);
+                    onItemClickListener.onItemRemoveListener(getAdapterPosition(), sach);
                 }
             });
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    onItemClickListener.onItemClickListener(getLayoutPosition(), sach);
+                    onItemClickListener.onItemClickListener(getAdapterPosition(), sach);
                 }
             });
         }

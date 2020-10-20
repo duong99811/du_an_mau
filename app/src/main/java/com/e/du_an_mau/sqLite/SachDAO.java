@@ -3,11 +3,8 @@ package com.e.du_an_mau.sqLite;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
-import com.e.du_an_mau.model.NguoiDung;
 import com.e.du_an_mau.model.Sach;
-import com.e.du_an_mau.model.TheLoai;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +33,6 @@ public class SachDAO {
     public boolean updateSach(Sach sach) {
         SQLiteDatabase sqLiteDatabase = mySqlite.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put("masach", sach.masach);
         contentValues.put("matheloai", sach.matheloai);
         contentValues.put("tensach", sach.tensach);
         contentValues.put("tacgia", sach.tacgia);
@@ -52,6 +48,7 @@ public class SachDAO {
         long result = sqLiteDatabase.delete("SACH", "masach=?", new String[]{masach});
         return result > 0;
     }
+
     //getAllUser
     public List<Sach> getAllSach() {
         List<Sach> sachList = new ArrayList<>();
@@ -73,6 +70,7 @@ public class SachDAO {
         }
         return sachList;
     }
+
     public List<Sach> searchSach(String SearchSach) {
         List<Sach> sachList = new ArrayList<>();
         String sql = "SELECT * FROM SACH WHERE tensach LIKE '%" + SearchSach + "%'";
@@ -101,5 +99,27 @@ public class SachDAO {
         }
 
         return sachList;
+    }
+
+    //getMaSach
+    public Sach getSachByMaSach(String masach) {
+        Sach sach = null;
+        SQLiteDatabase sqLiteDatabase = mySqlite.getWritableDatabase();
+        Cursor cursor = sqLiteDatabase.query("SACH", new String[]{masach}, "masach=?", null, null, null, null);
+        if (cursor.moveToFirst()) {
+            while (!cursor.isAfterLast()) {
+                sach = new Sach();
+                masach = cursor.getString(0);
+                sach.matheloai = cursor.getString(1);
+                sach.tensach = cursor.getString(2);
+                sach.tacgia = cursor.getString(3);
+                sach.NXB = cursor.getString(4);
+                sach.giabia = cursor.getString(5);
+                sach.soluong = cursor.getString(6);
+                break;
+            }
+            cursor.moveToNext();
+        }
+        return sach;
     }
 }
